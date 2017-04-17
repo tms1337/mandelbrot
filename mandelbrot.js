@@ -7,7 +7,7 @@ w = 4;
 h = 2;
 var per_w = w / pixel_w;
 var per_h = h / pixel_h;
-max_iteration = 100;
+max_iteration = 50;
 
 function setup() {
     createCanvas(pixel_w, pixel_h);
@@ -63,11 +63,11 @@ function setPointColor(re, im) {
     fill(rgb[0], rgb[1], rgb[2]);
 }
 
-var isFirst = true;
+var shouldRender = true;
 
 function draw() {
-    if(isFirst) {
-        isFirst = false;
+    if(shouldRender) {
+        shouldRender = false;
         background(255, 0, 0);
         var re = a_left, im = b_left;
         var x = 0, y = 0;
@@ -87,4 +87,23 @@ function draw() {
             im -= per_h;     
         }
     }
+}
+
+function mousePressed() {
+    console.log("Mouse pressed");
+    
+    a_left = a_left + mouseX * per_w;
+    b_left = b_left - mouseY * per_h; 
+}
+
+function mouseReleased() {
+    console.log("Mouse released");
+
+    var a_right = a_left + mouseX * per_w;
+    var b_right = b_left - mouseY * per_h;
+
+    w = a_right - a_left;
+    h = b_right - b_left;
+
+    shouldRender = true; 
 }
