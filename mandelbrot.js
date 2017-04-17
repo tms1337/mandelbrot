@@ -1,13 +1,14 @@
 var a_left = -2 , b_left = 1;
-pixel_w = 1000;
-pixel_h = 500;
+var prev_a_left = -2, prev_b_left = 1;
 pixel_step_x = 1;
 pixel_step_y = 1;
+pixel_w = 400;
+pixel_h = 200;
 w = 4;
 h = 2;
 var per_w = w / pixel_w;
 var per_h = h / pixel_h;
-max_iteration = 50;
+max_iteration = 1000;
 
 function setup() {
     createCanvas(pixel_w, pixel_h);
@@ -68,7 +69,9 @@ var shouldRender = true;
 function draw() {
     if(shouldRender) {
         shouldRender = false;
+        
         background(255, 0, 0);
+        
         var re = a_left, im = b_left;
         var x = 0, y = 0;
         
@@ -99,11 +102,19 @@ function mousePressed() {
 function mouseReleased() {
     console.log("Mouse released");
 
-    var a_right = a_left + mouseX * per_w;
-    var b_right = b_left - mouseY * per_h;
+    var a_right = prev_a_left + mouseX * per_w;
+    var b_right = prev_b_left - mouseY * per_h;
 
     w = a_right - a_left;
-    h = b_right - b_left;
+    h = b_left - b_right;
+
+    console.log(w, h);
+
+    prev_a_left = a_left;
+    prev_b_left = b_left;
+
+    per_w = w / pixel_w;
+    per_h = h / pixel_h;
 
     shouldRender = true; 
 }
