@@ -1,7 +1,8 @@
-var a = -1 , b = 1;
+var a_left = -1 , b_left = 1;
+var a_right = 2, b_right = -1;
 var w = 1;
 var per_w = 0.001;
-max_iteration = 1000;
+max_iteration = 50;
 
 function setup() {
     createCanvas(1000, 500);
@@ -50,22 +51,11 @@ function getIterationCount(re, im) {
 
 function setPointColor(re, im) {
     var iterations = getIterationCount(re, im);
-    var rgb = hslToRgb(0.5, 0.8, iterations/max_iteration);
+    var quotient = ((max_iteration - iterations) / max_iteration);
+    
     noStroke();
+    var rgb = hslToRgb(quotient, 1, quotient);
     fill(rgb[0], rgb[1], rgb[2]);
-    var quotient = ( iterations / max_iteration);
-    var color = 255 * quotient;
-    if(quotient > 0.5) {
-        fill(color, color, 255);
-    } else {
-        fill(0, 0, color);
-    }
-
-    if(iterations == max_iteration) {
-        fill(0);
-    } else {
-        fill(255);
-    }
 }
 
 var isFirst = true;
@@ -74,12 +64,12 @@ function draw() {
     if(isFirst) {
         isFirst = false;
         background(255, 0, 0);
-        var re = a, im = b;
+        var re = a_left, im = b_left;
         var x = 0, y = 0;
         
         while(y < height) {
             x = 0;
-            re = a;
+            re = a_left;
             while(x < width) {
                 setPointColor(re, im);
                 rect(x, y, w, w);
