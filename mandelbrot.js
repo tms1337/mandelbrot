@@ -1,11 +1,16 @@
-var a_left = -1 , b_left = 1;
-var a_right = 2, b_right = -1;
-var w = 1;
-var per_w = 0.001;
-max_iteration = 50;
+var a_left = -2 , b_left = 1;
+pixel_w = 1000;
+pixel_h = 500;
+pixel_step_x = 1;
+pixel_step_y = 1;
+w = 4;
+h = 2;
+var per_w = w / pixel_w;
+var per_h = h / pixel_h;
+max_iteration = 100;
 
 function setup() {
-    createCanvas(1000, 500);
+    createCanvas(pixel_w, pixel_h);
 }
 
 function hslToRgb(h, s, l){
@@ -74,12 +79,12 @@ function draw() {
                 setPointColor(re, im);
                 rect(x, y, w, w);
 
-                x += w;
+                x += pixel_step_x;
                 re += per_w;
             }
 
-            y += w;
-            im -= per_w;     
+            y += pixel_step_y;
+            im -= per_h;     
         }
     }
 }
